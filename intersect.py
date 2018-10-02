@@ -18,8 +18,10 @@ class Line(object):
 #This function is used to sort the vertices and intersections in order
 def sort_vertices(points_list,src_point):
     points_list.sort(key = lambda p: (p.x-src_point.x)**2+(p.y-src_point.y)**2)
+    '''
     for value in points_list:
-    	print value
+        print value
+    '''
     return points_list
 
 def intersect (l1, l2):
@@ -84,7 +86,7 @@ def save_intersect(intersect_points,pres_v_dic,pres_e_dic,global_v_dic):
     for x in range (0,len(intersect_points)-1):
         edge_exist_flag=0
         if len(global_v_dic)==0:
-         	max_key=0
+            max_key=0
         else:
             max_key=max(global_v_dic.keys())
         src_key = max_key + 1
@@ -126,22 +128,24 @@ def generate_graph(db_list,pres_v_dic,pres_e_dic,global_v_dic):
             intersect_points=[]
             for m in range (0,len(db_list)):
                 for n in range (0,len(db_list[m].edges)):
-                    exist_flag=0
                     if db_list[i].name == db_list[m].name:
                         break
                     error = intersect(db_list[i].edges[j],db_list[m].edges[n])
                     if error == -1:
-                        print db_list[i].edges[j], 'with', db_list[m].edges[n], 'no intersection'
+                        #print db_list[i].edges[j], 'with', db_list[m].edges[n], 'no intersection'
+                        pass
                     elif error == -2:
-                        print db_list[i].edges[j], 'with', db_list[m].edges[n], 'intersection out of range'
+                        #print db_list[i].edges[j], 'with', db_list[m].edges[n], 'intersection out of range'
+                        pass
                     elif error == -3:
-                        print 'Invalid Street'
+                        print 'Error: Invalid Streets'
                         pres_v_dic={}
                         pres_e_dic=[]
                         return pres_v_dic,pres_e_dic,global_v_dic
                     else:
-                        print db_list[i].edges[j], 'with', db_list[m].edges[n], 'Intersection is', error
+                        #print db_list[i].edges[j], 'with', db_list[m].edges[n], 'has intersections'
                         for p in error:
+                            exist_flag=0
                             for value in intersect_points:
                                if abs(value.x-p.x)<=0.01 and abs(value.y-p.y)<=0.01:
                                 exist_flag=1
@@ -178,10 +182,12 @@ def generate_graph(db_list,pres_v_dic,pres_e_dic,global_v_dic):
         print '  ',value
     print '}'
 
+    '''
     print 'G_V = {'
     for key, value in global_v_dic.iteritems():
         print '  ',key,':',value
     print '}'
+    '''
  
     return pres_v_dic,pres_e_dic,global_v_dic
 
