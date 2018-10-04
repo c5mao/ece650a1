@@ -153,7 +153,7 @@ def main():
     while True:
         try:
             line = sys.stdin.readline()
-            if len(line) == 1:
+            if line == '':
                 break
         
             #print 'read a line:', line
